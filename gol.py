@@ -52,12 +52,10 @@ class GameOfLife:
 
     def generate_steps(self):
         steps = []
-        steps.append(self.grid)
-        o = self.next_generation(self.grid)
-        steps.append(o)
-
-        for _ in range(self.n_gen-1):
-            o = self.next_generation(o)
-            steps.append(o)
+        step = self.grid
+        steps.append(step)
+        for _ in range(self.n_gen):
+            step = self.next_generation(step)
+            steps.append(step)
         
         return steps

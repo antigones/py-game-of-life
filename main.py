@@ -40,8 +40,7 @@ def draw_glider(on_grid):
     on_grid[1, 2] = 1
 
 def pretty_print(step):
-    a = "\n".join(["".join(str(x)) for x in step]).replace('0',' ').replace('1','#')
-    return a
+    return "\n".join(["".join(str(x)) for x in step]).replace('0',' ').replace('1','#')
 
 size= 11
 n_gen = 50
@@ -50,7 +49,7 @@ grid = np.zeros(shape=(size,size))
 draw_glider(grid)
 
 
-gol = GameOfLife(grid, size, n_gen)
+gol = GameOfLife(grid, n_gen)
 steps = gol.generate_steps()
 
 frame = 0
