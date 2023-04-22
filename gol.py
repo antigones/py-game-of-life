@@ -9,6 +9,11 @@ class GameOfLife:
         self.n_gen = n_gen
         self.size_y = len(grid)
         self.size_x = len(grid[0])
+
+        self.rules = [
+            [0,0,0,1,0,0,0,0,0,0],
+            [0,0,1,1,0,0,0,0,0,0],
+        ]
     
 
     def count_alive_neighbours(self, on_grid, i, j):
@@ -23,30 +28,16 @@ class GameOfLife:
             (i-1, j+1)  # ne
             ]
 
-        return sum(on_grid[x][y] == 1 for x, y in neighbors
+        return sum(on_grid[x][y] for x, y in neighbors
                 if 0 <= x < self.size_x and 0 <= y < self.size_y)
 
 
     def next_generation(self, on_grid):
         next_grid = np.zeros(shape=(self.size_y, self.size_x))
         for (i, j) in [(i, j) for i in range(self.size_y) for j in range(self.size_x)]:
-            alive_n = self.count_alive_neighbours(on_grid, i, j)
-            
-            cur_cell = on_grid[i, j]
-            if cur_cell == 1:
-                if alive_n < 2:
-                    next_grid[i, j] = 0
-                if alive_n > 3:
-                    next_grid[i, j] = 0
-                if alive_n ==  2 or alive_n == 3:
-                    next_grid[i, j] = 1
-            else:
-                if cur_cell == 0:
-                    if alive_n == 3:
-                        # current cell come alive
-                        next_grid[i, j] = 1
-                else:
-                    next_grid[i, j] = 0
+            cell_status = int(on_grid[i, j])
+            alive_n = int(self.count_alive_neighbours(on_grid, i, j))
+            next_grid[i,j] = self.rules[cell_status][alive_n]
         return next_grid
 
 
